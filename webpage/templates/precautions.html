@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Precautions</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+    <style>
+        .video-container {
+            position: relative;
+            width: 100%;
+            height: 0;
+            padding-bottom: 56.25%; /* 16:9 */
+        }
+        .video-container iframe {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+        }
+        .exercise-img {
+            width: 100%;
+            height: auto;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1 class="text-center my-4">Precautions for {{ disease }}</h1>
+        <div class="jumbotron">
+            {% set precautions_dict = {
+                'Asthma': {
+                    'precautions': 'Avoid allergens, use inhalers, follow your asthma action plan.',
+                    'routine': [
+                        {'activity': 'Avoid triggers', 'details': 'Avoid triggers like smoke and dust.'},
+                        {'activity': 'Monitor condition', 'details': 'Use a peak flow meter to monitor your condition.'},
+                        {'activity': 'Take medications', 'details': 'Take prescribed medications regularly.'}
+                    ],
+                    'exercises': [
+                        {'name': 'Deep Breathing', 'image': 'deep_breathing.jpg'},
+                        {'name': 'Diaphragmatic Breathing', 'image': 'diaphragmatic_breathing.jpg'},
+                        {'name': 'Pursed-Lip Breathing', 'image': 'pursed_lip_breathing.jpg'}
+                    ]
+                },
+                'Bronchiectasis': {
+                    'precautions': 'Regular chest physiotherapy, avoid smoking, stay hydrated.',
+                    'routine': [
+                        {'activity': 'Chest Physiotherapy', 'details': 'Perform chest physiotherapy exercises.'},
+                        {'activity': 'Hydration', 'details': 'Drink plenty of fluids.'},
+                        {'activity': 'Avoid Infections', 'details': 'Avoid respiratory infections.'}
+                    ],
+                    'exercises': [
+                        {'name': 'Postural Drainage', 'image': 'postural_drainage.jpg'},
+                        {'name': 'Chest Percussion', 'image': 'chest_percussion.jpg'}
+                    ]
+                },
+                'Bronchiolitis': {
+                    'precautions': 'Use humidifiers, keep the patient hydrated, monitor breathing.',
+                    'routine': [
+                        {'activity': 'Use Humidifier', 'details': 'Use a cool-mist humidifier.'},
+                        {'activity': 'Rest', 'details': 'Ensure the patient gets plenty of rest.'},
+                        {'activity': 'Clear Airways', 'details': 'Keep the airways clear with saline drops and suction.'}
+                    ],
+                    'exercises': [
+                        {'name': 'Gentle Deep Breathing', 'image': 'gentle_deep_breathing.jpg'}
+                    ]
+                },
+                'COPD': {
+                    'precautions': 'Avoid smoking, regular exercise, pulmonary rehabilitation.',
+                    'routine': [
+                        {'activity': 'Avoid Lung Irritants', 'details': 'Avoid exposure to lung irritants.'},
+                        {'activity': 'Healthy Diet', 'details': 'Follow a healthy diet.'},
+                        {'activity': 'Regular Exercises', 'details': 'Maintain an active lifestyle with regular exercises.'}
+                    ],
+                    'exercises': [
+                        {'name': 'Pursed-Lip Breathing', 'image': 'pursed_lip_breathing.jpg'},
+                        {'name': 'Diaphragmatic Breathing', 'image': 'diaphragmatic_breathing.jpg'},
+                        {'name': 'Controlled Coughing', 'image': 'controlled_coughing.jpg'}
+                    ]
+                },
+                'Healthy': {
+                    'precautions': 'Maintain a healthy lifestyle with regular exercise and a balanced diet.',
+                    'routine': [
+                        {'activity': 'Physical Activity', 'details': 'Engage in regular physical activity.'},
+                        {'activity': 'Balanced Diet', 'details': 'Eat a balanced diet.'},
+                        {'activity': 'Stay Hydrated', 'details': 'Stay hydrated.'}
+                    ],
+                    'exercises': [
+                        {'name': 'Aerobic Exercises', 'image': 'aerobic_exercises.jpg'},
+                        {'name': 'Deep Breathing', 'image': 'deep_breathing.jpg'}
+                    ]
+                },
+                'LRTI': {
+                    'precautions': 'Rest, stay hydrated, take prescribed antibiotics.',
+                    'routine': [
+                        {'activity': 'Rest', 'details': 'Get plenty of rest.'},
+                        {'activity': 'Hydration', 'details': 'Drink fluids to stay hydrated.'},
+                        {'activity': 'Medication', 'details': 'Take all prescribed medications.'}
+                    ],
+                    'exercises': [
+                        {'name': 'Gentle Deep Breathing', 'image': 'gentle_deep_breathing.jpg'}
+                    ]
+                },
+                'Pneumonia': {
+                    'precautions': 'Take antibiotics as prescribed, get vaccinated, avoid smoking.',
+                    'routine': [
+                        {'activity': 'Rest', 'details': 'Ensure complete rest.'},
+                        {'activity': 'Hydration', 'details': 'Maintain good hydration.'},
+                        {'activity': 'Medication', 'details': 'Follow your doctor’s medication plan.'}
+                    ],
+                    'exercises': [
+                        {'name': 'Incentive Spirometry', 'image': 'incentive_spirometry.jpg'},
+                        {'name': 'Deep Breathing', 'image': 'deep_breathing.jpg'}
+                    ]
+                },
+                'URTI': {
+                    'precautions': 'Rest, stay hydrated, use decongestants and pain relievers.',
+                    'routine': [
+                        {'activity': 'Rest', 'details': 'Rest.'},
+                        {'activity': 'Warm Fluids', 'details': 'Drink warm fluids.'},
+                        {'activity': 'Use Humidifier', 'details': 'Use a humidifier to keep the air moist.'}
+                    ],
+                    'exercises': [
+                        {'name': 'Gentle Breathing Exercises', 'image': 'gentle_breathing_exercises.jpg'}
+                    ]
+                }
+            } %}
+            <p>{{ precautions_dict.get(disease, {}).get('precautions', 'No specific precautions available.') }}</p>
+            
+            <h3>Daily Routine Activities:</h3>
+            <table class="table table-striped">
+                <thead>
+                    <tr>
+                        <th>Activity</th>
+                        <th>Details</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for item in precautions_dict.get(disease, {}).get('routine', []) %}
+                        <tr>
+                            <td>{{ item.activity }}</td>
+                            <td>{{ item.details }}</td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+            
+            <h3>Breathing Exercises:</h3>
+            <div class="row">
+                {% for exercise in precautions_dict.get(disease, {}).get('exercises', []) %}
+                    <div class="col-md-4">
+                        <div class="card mb-4 shadow-sm">
+                            <img src="{{ url_for('static', filename='images/' ~ exercise.image) }}" class="card-img-top exercise-img" alt="{{ exercise.name }}">
+                            <div class="card-body">
+                                <h5 class="card-title">{{ exercise.name }}</h5>
+                            </div>
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+        </div>
+        
+        <h2 class="text-center my-4">YouTube Video Suggestions</h2>
+        <div class="row">
+            {% for video in videos %}
+                <div class="col-md-4">
+                    <div class="card mb-4 shadow-sm">
+                        <div class="card-body">
+                            <h5 class="card-title">{{ video.title }}</h5>
+                            <div class="video-container">
+                                <iframe src="https://www.youtube.com/embed/{{ video.videoId }}" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+        <button onclick="window.history.back()" class="btn btn-secondary">Back</button>
+    </div>
+</body>
+</html>
